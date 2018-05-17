@@ -6,13 +6,13 @@ package studies.kinkuro.sddargoogle.Map;
 
 public class LocationItem {
 
-    String address;
-    int contentId;
-    String district;
-    double latitude;
-    double longitude;
-    String name;
-    int numHolder;
+    private String address;
+    private int contentId;
+    private String district;
+    private double latitude;
+    private double longitude;
+    private String name;
+    private int numHolder;
 
     public LocationItem(String address, int contentId, String district, double latitude, double longitude, String name, int numHolder) {
         this.address = address;

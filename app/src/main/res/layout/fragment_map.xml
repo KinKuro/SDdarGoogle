@@ -2,15 +2,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#890">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
 
-    <TextView
+    <fragment
+        android:id="@+id/map_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_1_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="MAP"
-        android:textSize="80sp"
-        android:textStyle="bold"
-        android:textColor="#FFF"/>
+        android:layout_alignParentRight="true"
+        app:backgroundTint="@color/colorPrimaryDark2"
+        app:fabSize="mini"
+        android:src="@drawable/ic_fab_mylocation"
+        android:layout_margin="16dp"
+        android:visibility="invisible"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_2_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        app:backgroundTint="@color/colorPrimaryDark2"
+        app:fabSize="mini"
+        android:src="@drawable/ic_fab_find"
+        android:layout_margin="16dp"
+        android:visibility="invisible"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_3_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        app:backgroundTint="@color/colorPrimaryDark2"
+        app:fabSize="mini"
+        android:src="@drawable/ic_fab_distance"
+        android:layout_margin="16dp"
+        android:visibility="invisible"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_root_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        app:fabSize="normal"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_fab_main"/>
+
+
+
+
 
 </RelativeLayout>
