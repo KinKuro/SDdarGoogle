@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
+
 import studies.kinkuro.sddargoogle.Map.RentalsParser;
 
 public class IntroActivity extends AppCompatActivity {
@@ -23,6 +25,8 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         parser = new RentalsParser(this);
 
@@ -43,6 +47,7 @@ public class IntroActivity extends AppCompatActivity {
             }
         }else{
             parsingJsonAndGoMainActivity();
+
         }
 
     }//onCreate()...

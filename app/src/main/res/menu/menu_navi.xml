@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/pub_app_navi_item"
+        android:title="따릉이 앱"/>
+    <item android:id="@+id/how_to_use_navi_item"
+        android:title="따릉이 사용방법"/>
+    <item android:id="@+id/evaluate_navi_item"
+        android:title="앱 평가하기"/>
+</menu>
