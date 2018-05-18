@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">SDdarGoogle</string>
-    <string name="google_api_key">AIzaSyD_PcQKszGUYMlnHcqxlf3gqB26lP2ga5U</string>
+    <string name="google_api_key">GOOGLE_API_KEY</string>
 
 </resources>
