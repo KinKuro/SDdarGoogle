@@ -22,7 +22,7 @@
             android:layout_marginLeft="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="쓰자 따릉이(S DDar)"
+            android:text="쓰자 따릉이\n(S DDar)"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="24sp"/>

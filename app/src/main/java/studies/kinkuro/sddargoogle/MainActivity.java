@@ -126,7 +126,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }//onCreate()...
+
+    public void onBackPressed() {
+
+        if(drawer.isDrawerOpen(navView)) drawer.closeDrawer(navView, true);
+
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime){
+            super.onBackPressed();
+        }else {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(), "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
+    }//onBackPressed()...
 
     public void clickNaviMenu(View v){
         drawer.openDrawer(navView, true);

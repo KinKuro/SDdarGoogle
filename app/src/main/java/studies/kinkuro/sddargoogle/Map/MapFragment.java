@@ -17,6 +17,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -250,6 +251,7 @@ public class MapFragment extends Fragment {
                 drawCircle(dstLatLng);
                 isDest = false;
 
+
                 LatLng nwLatLng = new LatLng( (sLatitude-dLatitude < 0 ? sLatitude : dLatitude),
                         (sLongitude-dLongitude < 0 ? sLongitude : dLongitude));     //남서쪽 좌표 만들어주기
                 LatLng seLatLng = new LatLng( (sLatitude-dLatitude > 0 ? sLatitude : dLatitude),
@@ -296,23 +298,18 @@ public class MapFragment extends Fragment {
 
                     if(calcDistance(latitude, longitude, rLatitude, rLongitude)){
                         final LatLng rLatLng = new LatLng(rLatitude, rLongitude);
+                        Log.i("그려질 정류소", ""+isDest);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(isDest){
-                                    gMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bike_dest_n))
+                                //TODO:: flag 값으로 대여소 구분하기가 제대로 작동을 안해서 하나로 고정
+                                gMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bike_start_n))
                                             .position(rLatLng).title(item.getName()).snippet(item.getAddress()));
-
-                                }else {
-                                    gMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bike_start_n))
-                                            .position(rLatLng).title(item.getName()).snippet(item.getAddress()));
-
-                                }
                             }
                         });
                     }
-
                 }
+
             }//run()...
 
             public boolean calcDistance(double pLatitude, double pLongitude, double rLatitude, double rLongitude){
@@ -327,7 +324,6 @@ public class MapFragment extends Fragment {
 
                 return distance <= 500;
             }//calcDistance()...
-
         }.start();
     }
 
@@ -510,6 +506,5 @@ public class MapFragment extends Fragment {
         }
 
     }//SearchTwoLocationDialog class...
-    /////Dialogs.../////
 
 }

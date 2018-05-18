@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="studies.kinkuro.sddargoogle.Talk.TalkActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_title_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title : "
+                    android:textStyle="bold"
+                    android:textSize="24sp"/>
+                <EditText
+                    android:id="@+id/et_title_write"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:hint="input Title"
+                    android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_name_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name : "
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_marginTop="8dp"/>
+                <EditText
+                    android:id="@+id/et_name_write"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:hint="input Name"
+                    android:inputType="text"/>
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/sv_msg_write"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#DDD">
+                <EditText
+                    android:id="@+id/et_msg_write"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="8"
+                    android:maxLines="8"
+                    android:hint="input msg"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"/>
+            </ScrollView>
+
+            <ImageView
+                android:id="@+id/iv_img_write"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/selector_search_photo_talk"
+                android:clickable="true"
+                android:onClick="clickImg"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+                <ImageView
+                    android:id="@+id/btn_upload_write"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/selector_btn_submit"
+                    android:layout_marginLeft="60dp"
+                    android:clickable="true"
+                    android:onClick="clickUpload"/>
+                <ImageView
+                    android:id="@+id/btn_cancel_write"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/selector_btn_cancel"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="60dp"
+                    android:clickable="true"
+                    android:onClick="clickCancel"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

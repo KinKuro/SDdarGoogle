@@ -24,6 +24,7 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_intro);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -38,7 +39,7 @@ public class IntroActivity extends AppCompatActivity {
                     checkSelfPermission(Manifest.permission.VIBRATE) == PackageManager.PERMISSION_DENIED){
                 String[] permissions = {Manifest.permission.INTERNET,
                                         Manifest.permission.ACCESS_FINE_LOCATION,
-                                        Manifest.permission.CHANGE_NETWORK_STATE,
+                                        Manifest.permission.CHANGE_WIFI_STATE,
                                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                         Manifest.permission.VIBRATE};
                 requestPermissions(permissions, REQ_PERMISSION);

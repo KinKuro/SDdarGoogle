@@ -2,15 +2,112 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ABC">
+    android:background="@color/colorPrimaryLight"
+    android:padding="32dp">
 
-    <TextView
+    <RadioGroup
+        android:id="@+id/radio_group_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="TIMER"
-        android:textSize="80sp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:padding="16dp">
+        <RadioButton
+            android:id="@+id/radio_normal_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일반권"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark2"
+            android:textStyle="bold"
+            android:layout_marginRight="8dp"/>
+        <RadioButton
+            android:id="@+id/radio_premium_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="프리미엄권"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark2"
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"/>
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/tv_minute_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_group_timer"
+        android:layout_toLeftOf="@id/tv_colon_timer"
+        android:text="55"
+        android:textSize="72sp"
         android:textStyle="bold"
         android:textColor="#FFF"/>
+    <TextView
+        android:id="@+id/tv_colon_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_group_timer"
+        android:layout_centerHorizontal="true"
+        android:text=":"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textSize="72sp"
+        android:textStyle="bold"
+        android:textColor="#FFF"/>
+    <TextView
+        android:id="@+id/tv_second_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_group_timer"
+        android:layout_toRightOf="@id/tv_colon_timer"
+        android:text="00"
+        android:textSize="72sp"
+        android:textStyle="bold"
+        android:textColor="#FFF"/>
+
+
+    <ImageView
+        android:id="@+id/btn_start_timer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/tv_colon_timer"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/selector_btn_start_timer"
+        android:clickable="true"/>
+    <ImageView
+        android:id="@+id/btn_stop_timer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/tv_colon_timer"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="50dp"
+        android:src="@drawable/selector_btn_stop_timer"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/tv_caution_timer"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_start_timer"
+        android:layout_marginTop="24dp"
+        android:background="#FFF"
+        android:padding="8dp"
+        android:gravity="center"
+        android:text="※ 따릉이 주의사항 ※"
+        android:textColor="#F00"/>
+    <TextView
+        android:id="@+id/tv_caution_content_timer"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_caution_timer"
+        android:background="#FFF"
+        android:padding="8dp"
+        android:gravity="center_horizontal"
+        android:text="이것저것"/>
 
 </RelativeLayout>
