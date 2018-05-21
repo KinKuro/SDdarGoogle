@@ -4,16 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#302"
     tools:context="studies.kinkuro.sddargoogle.IntroActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:text="INTRO"
-        android:textColor="#FFF"
-        android:textSize="80sp"
-        android:textStyle="bold"/>
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/logo_sddar_web"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"/>
+        <TextView
+            android:id="@+id/title_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="쓰자 따릉이"
+            android:textColor="@color/colorPrimary2"
+            android:textSize="60sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/subtitle_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="S. DDAR"
+            android:textColor="@color/colorPrimary2"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/subtitle2_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="서울공공자전거 따릉이\n 보조 어플리케이션"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

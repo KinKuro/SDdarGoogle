@@ -43,5 +43,4 @@ dependencies {
 
     compile 'dev.dworks.libs:volleyplus:+'
 
-    compile 'com.google.code.gson:gson:2.8.4'
 }

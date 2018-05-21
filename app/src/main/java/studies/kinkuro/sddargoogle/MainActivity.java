@@ -118,9 +118,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.how_to_use_navi_item:
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bikeseoul.com/app/use/moveUseInfomation.do")));
                         break;
+                    /*
                     case R.id.evaluate_navi_item:
                         //TODO::이건 다른걸로 고치자
                         break;
+                    */
                 }
                 return false;
             }

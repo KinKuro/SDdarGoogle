@@ -1,8 +1,16 @@
 package studies.kinkuro.sddargoogle.Timer;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import studies.kinkuro.sddargoogle.MainActivity;
 import studies.kinkuro.sddargoogle.R;
 
 /**
@@ -26,6 +35,11 @@ public class TimerFragment extends Fragment {
     TextView tvMin, tvCol, tvSec;
     ImageView btnStart, btnStop;
     TextView tvCautionContent;
+
+    int minute = 55, second = 0;
+
+    TimerService service;
+    TimerReceiver receiver;
 
     @Nullable
     @Override
@@ -56,24 +70,53 @@ public class TimerFragment extends Fragment {
 
         btnStart.setOnClickListener(btnListener);
         btnStop.setOnClickListener(btnListener);
+
     }//onActivityCreated()...
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //TODO:: 서비스 시작 오류 고치기
+        /*
+        if(service == null){
+            Intent intent = new Intent(getContext(), TimerService.class);
+            getContext().startService(intent);
+            getContext().bindService(intent, conn, 0);
+        }
+        */
+        if(receiver == null){
+            receiver = new TimerReceiver();
+            IntentFilter filter = new IntentFilter("SDDAR_TIMER");
+            getContext().registerReceiver(receiver, filter);
+        }
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(receiver != null)        getContext().unregisterReceiver(receiver);
+    }
 
+    //////LISTENERs//////////////////
     RadioGroup.OnCheckedChangeListener radioListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int id) {
             switch (id){
                 case R.id.radio_normal_timer:
-                    tvMin.setText("55");
-                    tvSec.setText("00");
+                    minute = 55;
                     break;
 
                 case R.id.radio_premium_timer:
-                    tvMin.setText("115");
-                    tvSec.setText("00");
+                    minute = 115;
                     break;
             }
+            second = 0;
+
+            String minStr = String.format("%02d", minute);
+            String secStr = String.format("%02d", second);
+
+            tvMin.setText(minStr);
+            tvSec.setText(secStr);
         }
     };
 
@@ -82,11 +125,21 @@ public class TimerFragment extends Fragment {
         public void onClick(View view) {
             switch(view.getId()){
                 case R.id.btn_start_timer:
-                    Toast.makeText(getContext(), "타이머를 시작합니다.", Toast.LENGTH_SHORT).show();
                     rNormal.setClickable(false);
                     rPremium.setClickable(false);
                     btnStart.setClickable(false);
                     btnStop.setClickable(true);
+
+                    //TODO:: 타이머 시작하기
+                    //Toast.makeText(getContext(), "타이머를 시작합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "죄송합니다.\n타이머 기능은 준비중입니다.", Toast.LENGTH_SHORT).show();
+
+                    /*
+                    if(service != null){
+                        service.setTimer(minute, second);
+                        service.startTimer();
+                    }
+                    */
                     break;
 
                 case R.id.btn_stop_timer:
@@ -95,8 +148,59 @@ public class TimerFragment extends Fragment {
                     rPremium.setClickable(true);
                     btnStart.setClickable(true);
                     btnStop.setClickable(false);
+
+                    if(service != null){
+                        service.stopTimer();
+                        getContext().unbindService(conn);
+                        service = null;
+                        Intent intent = new Intent(getContext(), TimerService.class);
+                        getContext().stopService(intent);
+                    }
                     break;
             }
         }
     };
+
+    ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            TimerService.ServiceBinder binder = (TimerService.ServiceBinder)iBinder;
+            service = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+    //////LISTENERs...///////////////
+
+    public class TimerReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals("SDDAR_TIMER")){
+                int minute = intent.getIntExtra("minute", 0);
+                int second = intent.getIntExtra("second", 0);
+                final boolean isOneSec = intent.getBooleanExtra("isOneSec", false);
+
+                final String minStr = String.format("%02d", minute);
+                final String secStr = String.format("%02d", second);
+                Log.i("리시버", "리시빙");
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvMin.setText(minStr);
+                        tvSec.setText(secStr);
+                        if(isOneSec){
+                            tvCol.setVisibility(View.INVISIBLE);
+                        }else{
+                            tvCol.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            }
+        }
+    }//TimerReceiver class...
 }
