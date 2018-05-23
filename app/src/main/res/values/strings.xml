@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">쓰자 따릉이(S.Ddar)</string>
-    <string name="google_api_key">AIzaSyD_PcQKszGUYMlnHcqxlf3gqB26lP2ga5U</string>
+    <string name="google_api_key">YOUR_GOOGLE_API_KEY</string>
 
 </resources>
