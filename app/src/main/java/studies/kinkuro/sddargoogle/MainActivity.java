@@ -1,6 +1,7 @@
 package studies.kinkuro.sddargoogle;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -62,9 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
         tabHost = findViewById(android.R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
-        tabHost.addTab(tabHost.newTabSpec("map").setIndicator("맵"), DummyFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("timer").setIndicator("타이머"), DummyFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("talk").setIndicator("이야기"), DummyFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("map").setIndicator("", getResources().getDrawable(R.drawable.ic_tab_map)), DummyFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("timer").setIndicator("", getResources().getDrawable(R.drawable.ic_tab_timer)), DummyFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("talk").setIndicator("", getResources().getDrawable(R.drawable.ic_tab_talk)), DummyFragment.class, null);
+        tabHost.getTabWidget().setBackgroundResource(R.color.colorPrimary);
+        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.color.colorPrimary2);
 
         pager = findViewById(R.id.pager_main);
         pagerAdapater = new SddarPagerAdapater(getSupportFragmentManager());
@@ -73,14 +76,22 @@ public class MainActivity extends AppCompatActivity {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tag) {
+
+                for(int i = 0 ; i < tabHost.getTabWidget().getChildCount(); i++){
+                    tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.color.colorPrimary);
+                }
+
                 if(tag.equals("map")){
                     pager.setCurrentItem(0, true);
+                    tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.color.colorPrimary2);
                     tvTitle.setText("MAP");
                 }else if(tag.equals("timer")){
                     pager.setCurrentItem(1, true);
+                    tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.color.colorPrimary2);
                     tvTitle.setText("TIMER");
                 }else if(tag.equals("talk")){
                     pager.setCurrentItem(2, true);
+                    tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.color.colorPrimary2);
                     tvTitle.setText("TALK");
                 }
             }
@@ -118,11 +129,16 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.how_to_use_navi_item:
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bikeseoul.com/app/use/moveUseInfomation.do")));
                         break;
-                    /*
+
                     case R.id.evaluate_navi_item:
                         //TODO::이건 다른걸로 고치자
+                        String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        } catch (android.content.ActivityNotFoundException anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
                         break;
-                    */
                 }
                 return false;
             }

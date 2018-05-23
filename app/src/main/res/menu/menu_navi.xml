@@ -4,8 +4,8 @@
         android:title="따릉이 앱"/>
     <item android:id="@+id/how_to_use_navi_item"
         android:title="따릉이 사용방법"/>
-    <!--
+
     <item android:id="@+id/evaluate_navi_item"
         android:title="앱 평가하기"/>
-    -->
+
 </menu>
