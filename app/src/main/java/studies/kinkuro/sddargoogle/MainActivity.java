@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import studies.kinkuro.sddargoogle.Map.LocationItem;
+import studies.kinkuro.sddargoogle.Timer.TimerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         //확인용///
         items = G.locationItems;
-        Toast.makeText(this, "대여소 갯수 : "+items.size(), Toast.LENGTH_SHORT).show();
-        Log.i("MAIN_ACTIVITY" , "대여소 갯수 : "+items.size());
+
         ////////////
 
         drawer = findViewById(R.id.drawerlayout_main);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         tabHost = findViewById(android.R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         tabHost.addTab(tabHost.newTabSpec("map").setIndicator("", getResources().getDrawable(R.drawable.ic_tab_map)), DummyFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("timer").setIndicator("", getResources().getDrawable(R.drawable.ic_tab_timer)), DummyFragment.class, null);
+//        tabHost.addTab(tabHost.newTabSpec("timer").setIndicator("", getResources().getDrawable(R.drawable.ic_tab_timer)), DummyFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec("talk").setIndicator("", getResources().getDrawable(R.drawable.ic_tab_talk)), DummyFragment.class, null);
         tabHost.getTabWidget().setBackgroundResource(R.color.colorPrimary);
         tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.color.colorPrimary2);
@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
                     pager.setCurrentItem(0, true);
                     tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.color.colorPrimary2);
                     tvTitle.setText("MAP");
-                }else if(tag.equals("timer")){
-                    pager.setCurrentItem(1, true);
-                    tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.color.colorPrimary2);
-                    tvTitle.setText("TIMER");
+//                }else if(tag.equals("timer")){
+//                    pager.setCurrentItem(1, true);
+//                    tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.color.colorPrimary2);
+//                    tvTitle.setText("TIMER");
                 }else if(tag.equals("talk")){
                     pager.setCurrentItem(2, true);
                     tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.color.colorPrimary2);
@@ -128,6 +128,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.how_to_use_navi_item:
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bikeseoul.com/app/use/moveUseInfomation.do")));
+                        break;
+
+                    case R.id.timer_item:
+                        startActivity(new Intent(MainActivity.this, TimerActivity.class));
                         break;
 
                     case R.id.evaluate_navi_item:

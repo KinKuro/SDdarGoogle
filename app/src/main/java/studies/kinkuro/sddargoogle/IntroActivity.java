@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import studies.kinkuro.sddargoogle.Map.RentalsParser;
 
@@ -91,6 +92,7 @@ public class IntroActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Toast.makeText(IntroActivity.this, "대여소 갯수 : "+G.locationItems.size(), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(IntroActivity.this, MainActivity.class));
                         finish();
                     }

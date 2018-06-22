@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,7 +19,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import studies.kinkuro.sddargoogle.MainActivity;
 import studies.kinkuro.sddargoogle.R;
 
 /**
@@ -41,23 +39,25 @@ public class TimerFragment extends Fragment {
     TimerService service;
     TimerReceiver receiver;
 
+    boolean isShown = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timer, container, false);
 
-        rGroup = view.findViewById(R.id.radio_group_timer);
-        rNormal = view.findViewById(R.id.radio_normal_timer);
-        rPremium = view.findViewById(R.id.radio_premium_timer);
+        rGroup = view.findViewById(R.id.radio_group_timer_activity);
+        rNormal = view.findViewById(R.id.radio_normal_timer_activity);
+        rPremium = view.findViewById(R.id.radio_premium_timer_activity);
 
-        tvMin = view.findViewById(R.id.tv_minute_timer);
-        tvCol = view.findViewById(R.id.tv_colon_timer);
-        tvSec = view.findViewById(R.id.tv_second_timer);
+        tvMin = view.findViewById(R.id.tv_minute_timer_activity);
+        tvCol = view.findViewById(R.id.tv_colon_timer_activity);
+        tvSec = view.findViewById(R.id.tv_second_timer_activity);
 
-        btnStart = view.findViewById(R.id.btn_start_timer);
-        btnStop = view.findViewById(R.id.btn_stop_timer);
+        btnStart = view.findViewById(R.id.btn_start_timer_activity);
+        btnStop = view.findViewById(R.id.btn_stop_timer_activity);
 
-        tvCautionContent = view.findViewById(R.id.tv_caution_content_timer);
+        tvCautionContent = view.findViewById(R.id.tv_caution_content_timer_activity);
 
         return view;
     }//onCreateView()...
@@ -65,7 +65,7 @@ public class TimerFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        rGroup.check(R.id.radio_normal_timer);
+        rGroup.check(R.id.radio_normal_timer_activity);
         rGroup.setOnCheckedChangeListener(radioListener);
 
         btnStart.setOnClickListener(btnListener);
@@ -83,18 +83,27 @@ public class TimerFragment extends Fragment {
             getContext().startService(intent);
             getContext().bindService(intent, conn, 0);
         }
-        */
+
         if(receiver == null){
             receiver = new TimerReceiver();
             IntentFilter filter = new IntentFilter("SDDAR_TIMER");
-            getContext().registerReceiver(receiver, filter);
+            getActivity().registerReceiver(receiver, filter);
         }
+        */
+
+        isShown = true;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if(receiver != null)        getContext().unregisterReceiver(receiver);
+        isShown = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(receiver != null)        getActivity().unregisterReceiver(receiver);
     }
 
     //////LISTENERs//////////////////
@@ -102,11 +111,11 @@ public class TimerFragment extends Fragment {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int id) {
             switch (id){
-                case R.id.radio_normal_timer:
+                case R.id.radio_normal_timer_activity:
                     minute = 55;
                     break;
 
-                case R.id.radio_premium_timer:
+                case R.id.radio_premium_timer_activity:
                     minute = 115;
                     break;
             }
@@ -124,25 +133,24 @@ public class TimerFragment extends Fragment {
         @Override
         public void onClick(View view) {
             switch(view.getId()){
-                case R.id.btn_start_timer:
+                case R.id.btn_start_timer_activity:
                     rNormal.setClickable(false);
                     rPremium.setClickable(false);
                     btnStart.setClickable(false);
                     btnStop.setClickable(true);
 
                     //TODO:: 타이머 시작하기
-                    //Toast.makeText(getContext(), "타이머를 시작합니다.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "타이머를 시작합니다.", Toast.LENGTH_SHORT).show();
                     Toast.makeText(getContext(), "죄송합니다.\n타이머 기능은 준비중입니다.", Toast.LENGTH_SHORT).show();
 
-                    /*
                     if(service != null){
                         service.setTimer(minute, second);
                         service.startTimer();
                     }
-                    */
+
                     break;
 
-                case R.id.btn_stop_timer:
+                case R.id.btn_stop_timer_activity:
                     Toast.makeText(getContext(), "타이머를 종료합니다.", Toast.LENGTH_SHORT).show();
                     rNormal.setClickable(true);
                     rPremium.setClickable(true);
@@ -173,34 +181,43 @@ public class TimerFragment extends Fragment {
 
         }
     };
+
+
     //////LISTENERs...///////////////
 
     public class TimerReceiver extends BroadcastReceiver {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(action.equals("SDDAR_TIMER")){
-                int minute = intent.getIntExtra("minute", 0);
-                int second = intent.getIntExtra("second", 0);
-                final boolean isOneSec = intent.getBooleanExtra("isOneSec", false);
+        public void onReceive(Context context, final Intent intent) {
+            new Thread(){
+                @Override
+                public void run() {
+                    String action = intent.getAction();
+                    if(action.equals("SDDAR_TIMER")){
+                        int minute = intent.getIntExtra("minute", 0);
+                        int second = intent.getIntExtra("second", 0);
+                        final boolean isOneSec = intent.getBooleanExtra("isOneSec", false);
 
-                final String minStr = String.format("%02d", minute);
-                final String secStr = String.format("%02d", second);
-                Log.i("리시버", "리시빙");
+                        final String minStr = String.format("%02d", minute);
+                        final String secStr = String.format("%02d", second);
+                        Log.i("리시버", "리시빙");
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tvMin.setText(minStr);
-                        tvSec.setText(secStr);
-                        if(isOneSec){
-                            tvCol.setVisibility(View.INVISIBLE);
-                        }else{
-                            tvCol.setVisibility(View.VISIBLE);
+                        if(isShown){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvMin.setText(minStr);
+                                    tvSec.setText(secStr);
+                                    if(isOneSec){
+                                        tvCol.setVisibility(View.INVISIBLE);
+                                    }else{
+                                        tvCol.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            });
                         }
                     }
-                });
-            }
+                }
+            }.start();
         }
     }//TimerReceiver class...
 }

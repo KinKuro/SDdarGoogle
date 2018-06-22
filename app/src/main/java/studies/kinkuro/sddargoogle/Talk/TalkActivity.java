@@ -107,34 +107,39 @@ public class TalkActivity extends AppCompatActivity {
     };
     
     public void uploadPost(){
-        
+
         String serverUrl = "http://kinkuro.dothome.co.kr/sddar/insertDB.php";
         String title = etTitle.getText().toString();
         String name = etName.getText().toString();
         String msg = etMsg.getText().toString();
         String imgPath = realImgPath;
 
-        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(TalkActivity.this, "업로드에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(TalkActivity.this, "업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
-        
-        multiPartRequest.addStringParam("title", title);
-        multiPartRequest.addStringParam("name", name);
-        multiPartRequest.addStringParam("msg", msg);
-        if(imgPath != null) multiPartRequest.addFile("upload", imgPath);
+        if(!title.trim().equals("") && !name.trim().equals("") && !msg.trim().equals("")){
+            SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(TalkActivity.this, "업로드에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(TalkActivity.this, "업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(multiPartRequest);
-        
+            multiPartRequest.addStringParam("title", title);
+            multiPartRequest.addStringParam("name", name);
+            multiPartRequest.addStringParam("msg", msg);
+            if(imgPath != null) multiPartRequest.addFile("upload", imgPath);
+
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(multiPartRequest);
+
+        }else {
+            new AlertDialog.Builder(this).setMessage("비어있는 항목이 있습니다.\n이미지를 제외한 나머지 항목을 채워주세요").setPositiveButton("확인", null).create().show();
+            return;
+        }
     }
 
     //절대경로 구하는 메소드

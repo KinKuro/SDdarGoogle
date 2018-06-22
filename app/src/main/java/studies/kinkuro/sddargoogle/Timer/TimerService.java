@@ -3,7 +3,10 @@ package studies.kinkuro.sddargoogle.Timer;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 
 public class TimerService extends Service {
 
@@ -57,15 +60,21 @@ public class TimerService extends Service {
                     if(second < 0){
                         second = 59;
                         minute--;
-                        if(minute == 9 && second > 58){
-                            //TODO:: 소리내기
+                        if((minute == 9 && second > 58) || (minute == 4 && second > 58)){
+                            Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                VibrationEffect effect = VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE);
+                                vibrator.vibrate(effect);
+                            }else{
+                                vibrator.vibrate(2000);
+                            }
                         }
                     }
                 }
                 isOneSec = !isOneSec;
 
                 try {
-                    sleep(500);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

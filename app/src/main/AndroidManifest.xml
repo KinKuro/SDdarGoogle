@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <!-- TODO:: 지금 쓰는건 debug용 키이므로 나중에 release용 키를 받아서 바꿔주자 -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo_sddar"
@@ -28,7 +27,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,6 +44,11 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".Timer.TimerActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <receiver android:name=".Timer.TimerActivity$TimerReceiver"></receiver>
     </application>
 
 </manifest>
